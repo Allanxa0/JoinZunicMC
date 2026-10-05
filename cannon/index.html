@@ -1,13 +1,82 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Unirse a ZunicMC</title>
-  <meta http-equiv="refresh" content="0;url=minecraft://?addExternalServer=ZunicMC|143.20.99.45:19132">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0a0a0a;
+      font-family: sans-serif;
+      color: #fff;
+      padding: 20px;
+    }
+    .card {
+      width: 100%;
+      max-width: 380px;
+      border: 1px solid #333;
+      background: #0d0d0d;
+      padding: 24px;
+    }
+    .head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .head img {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+    }
+    .head h1 { font-size: 20px; margin: 0; }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      font-size: 15px;
+    }
+    .row span:first-child { color: #bbb; }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      text-align: center;
+      text-decoration: none;
+      font-size: 16px;
+      margin-top: 10px;
+      border: 1px solid #333;
+      color: #fff;
+      background: transparent;
+    }
+    .btn.play {
+      background: #22c55e;
+      border-color: #22c55e;
+      color: #000;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
 </head>
-<body style="font-family:sans-serif;text-align:center;padding:40px">
-  <h2>Abriendo Minecraft...</h2>
-  <p><a href="minecraft://?addExternalServer=ZunicMC|143.20.99.45:19132">Pulsa aquí si no se abre</a></p>
+<body>
+  <div class="card">
+    <div class="head">
+      <img src="../logo.png" alt="" onerror="this.style.display='none'">
+      <h1>ZunicMC</h1>
+    </div>
+
+    <div class="row"><span>Address</span><span>143.20.99.45</span></div>
+    <div class="row"><span>Port</span><span>19132</span></div>
+    <div class="row"><span>Edition</span><span>Bedrock</span></div>
+
+    <a class="btn play" href="minecraft://?addExternalServer=ZunicMC|143.20.99.45:19132">Open Minecraft</a>
+    <a class="btn" href="javascript:history.back()">Back</a>
+  </div>
 </body>
 </html>
