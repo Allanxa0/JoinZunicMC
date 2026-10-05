@@ -30,11 +30,7 @@
       gap: 12px;
       margin-bottom: 20px;
     }
-    .head img {
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-    }
+    .head img { width: 40px; height: 40px; border-radius: 8px; }
     .head h1 { font-size: 20px; margin: 0; }
     .row {
       display: flex;
@@ -43,6 +39,16 @@
       font-size: 15px;
     }
     .row span:first-child { color: #bbb; }
+    .dot {
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #777;
+      margin-right: 6px;
+    }
+    .dot.on { background: #22c55e; }
+    .dot.off { background: #ef4444; }
     .btn {
       display: block;
       width: 100%;
@@ -62,6 +68,11 @@
       font-weight: bold;
       margin-top: 20px;
     }
+    .btn.discord {
+      background: #5865f2;
+      border-color: #5865f2;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -74,9 +85,39 @@
     <div class="row"><span>Address</span><span>143.20.99.45</span></div>
     <div class="row"><span>Port</span><span>19132</span></div>
     <div class="row"><span>Edition</span><span>Bedrock</span></div>
+    <div class="row">
+      <span>Status</span>
+      <span><i class="dot" id="dot"></i><b id="status">Cargando...</b></span>
+    </div>
+    <div class="row"><span>Players</span><span id="players">-</span></div>
 
     <a class="btn play" href="minecraft://?addExternalServer=ZunicMC|143.20.99.45:19132">Open Minecraft</a>
-    <a class="btn" href="javascript:history.back()">Back</a>
+    <a class="btn discord" href="https://discord.gg/QwbTXjJFJW">Unirse al Discord</a>
   </div>
+
+  <script>
+    async function cargarEstado() {
+      const dot = document.getElementById('dot');
+      const status = document.getElementById('status');
+      const players = document.getElementById('players');
+      try {
+        const r = await fetch('https://api.mcsrvstat.us/bedrock/3/143.20.99.45:19132');
+        const d = await r.json();
+        if (d.online) {
+          dot.className = 'dot on';
+          status.textContent = 'Online';
+          players.textContent = d.players.online + ' / ' + d.players.max;
+        } else {
+          dot.className = 'dot off';
+          status.textContent = 'Offline';
+          players.textContent = '0';
+        }
+      } catch (e) {
+        status.textContent = 'No disponible';
+      }
+    }
+    cargarEstado();
+    setInterval(cargarEstado, 60000);
+  </script>
 </body>
 </html>
