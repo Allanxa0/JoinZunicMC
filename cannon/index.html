@@ -96,28 +96,39 @@
   </div>
 
   <script>
+    // API propia del servidor (puerto extra 21770). Se actualiza cada 3 segundos.
+    const API_URL = 'http://143.20.99.45:21770/';
+
+    const dot = document.getElementById('dot');
+    const status = document.getElementById('status');
+    const players = document.getElementById('players');
+
     async function cargarEstado() {
-      const dot = document.getElementById('dot');
-      const status = document.getElementById('status');
-      const players = document.getElementById('players');
       try {
-        const r = await fetch('https://api.mcsrvstat.us/bedrock/3/143.20.99.45:19132');
+        const ctrl = new AbortController();
+        const t = setTimeout(() => ctrl.abort(), 4000);
+        const r = await fetch(API_URL, { cache: 'no-store', signal: ctrl.signal });
+        clearTimeout(t);
         const d = await r.json();
         if (d.online) {
           dot.className = 'dot on';
           status.textContent = 'Online';
-          players.textContent = d.players.online + ' / ' + d.players.max;
+          players.textContent = d.players + ' / ' + d.max;
         } else {
           dot.className = 'dot off';
           status.textContent = 'Offline';
           players.textContent = '0';
         }
       } catch (e) {
-        status.textContent = 'No disponible';
+        // Si el API no responde, el servidor está apagado
+        dot.className = 'dot off';
+        status.textContent = 'Offline';
+        players.textContent = '0';
       }
     }
+
     cargarEstado();
-    setInterval(cargarEstado, 15000);
+    setInterval(cargarEstado, 3000);
   </script>
 </body>
 </html>
